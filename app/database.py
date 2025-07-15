@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__
                            )
 DATABASE_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'shortener.db')
 
-def createTable():
+def create_table():
     conn = None
     try:
         conn = sqlite3.connect(DATABASE_PATH)
@@ -26,7 +26,7 @@ def createTable():
         conn.commit()
         logger.info("Tables Created Successfully!")
     except Error as e: 
-        logger.error("Error trying to create tables: {e}")
+        logger.error(f"Error trying to create tables: {e}")
     finally: 
         if conn:
             conn.close()
@@ -34,7 +34,7 @@ def createTable():
 @contextmanager
 def get_db_connection():
     """
-    Context manager for connection with database
+    Context manager for connection with DB
     """
     conn = None
     try: 
@@ -42,7 +42,7 @@ def get_db_connection():
         conn.row_factory = sqlite3.Row
         yield conn
     except Error as e: 
-        logger.error("Error on connection to database: {e}")
+        logger.error(f"Error on connection to database: {e}")
         raise
     finally:
         if conn:
@@ -50,14 +50,14 @@ def get_db_connection():
             
 def insert_url(short_id, target_url):
     """
-    Insert a new url to database
+    Insert a new url to DB
     
         Args:
         short_id: short id for url
         target_url: original url
         
         Returns:
-        bool: True if successfull, False otherwise
+        bool: True if successful, False otherwise
     """
     try: 
         with get_db_connection() as conn:
@@ -114,11 +114,11 @@ def increment_clicks(short_id):
             )
             conn.commit()
     except Error as e:
-        logger.error("Error updating click counter")
+        logger.error(f"Error updating click counter, {e}")
         
 def check_id_exists(short_id):
     """
-    Verify if Id exists in DB
+    Verify if id exists in DB
     
     Args:
         short_id: ID to check
@@ -163,7 +163,7 @@ def get_url_stats(limit=10):
             results = cursor.fetchall()
             return [dict(row) for row in results]
     except Error as e:
-        logger.error(f"Error trying to search statistics")
+        logger.error(f"Error trying to search statistics, {e}")
         return []
 
 def delete_url(short_id: str) -> bool:

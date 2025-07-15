@@ -18,7 +18,7 @@ class URLInfo(BaseModel):
     Model to return the shortened url.
     
     Attributes:
-        id: Unique indentifier for the shortened url
+        id: Unique identifier for the shortened url
         target_url: Original URL to be shortened
         short_url: Shortened Url
     """

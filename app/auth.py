@@ -4,6 +4,7 @@ import os
 
 security = HTTPBearer()
 
+
 def get_admin_token():
     """
     Get the admin token from environment variables.
@@ -12,6 +13,7 @@ def get_admin_token():
         str: Admin API token
     """
     return os.getenv("ADMIN_API_TOKEN")
+
 
 def validate_admin_token(credentials: HTTPAuthorizationCredentials = Depends(security)):
     """
@@ -28,18 +30,18 @@ def validate_admin_token(credentials: HTTPAuthorizationCredentials = Depends(sec
     """
     token = credentials.credentials
     admin_token = get_admin_token()
-    
+
     if not admin_token:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Admin token not configured"
         )
-    
+
     if token != admin_token:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid token or insufficient permissions",
             headers={"WWW-Authenticate": "Bearer"}
         )
-    
+
     return token
