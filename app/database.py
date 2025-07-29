@@ -4,8 +4,7 @@ import os
 from contextlib import contextmanager
 import logging
 
-logger = logging.getLogger(__name__
-                           )
+logger = logging.getLogger(__name__)
 DATABASE_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'shortener.db')
 
 def create_table():

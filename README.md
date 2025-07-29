@@ -88,8 +88,8 @@ ALLOWED_ORIGINS=https://yourdomain.com,https://www.yourdomain.com
 
 1. **Clone and navigate to the project**:
    ```bash
-   git clone <your-repo-url>
-   cd zipway-backend
+   git clone https://github.com/esdrassantos06/zipwayAPI.git
+   cd zipwayAPI
    ```
 
 2. **Create and activate virtual environment**:
