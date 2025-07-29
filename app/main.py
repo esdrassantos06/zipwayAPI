@@ -212,7 +212,7 @@ async def create_short_url(url: URLBase, request: Request):
 
     else:
         while True:
-            short_id = shortuuid.uuid()[:7]
+            short_id = shortuuid.random(length=7)
             if not check_id_exists(short_id):
                 break
 
