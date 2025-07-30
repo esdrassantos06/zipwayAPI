@@ -23,7 +23,7 @@ shortuuid==1.0.13
 six==1.17.0
 slowapi==0.1.9
 sniffio==1.3.1
-starlette==0.46.1
+starlette==0.47.2
 typing-inspection==0.4.0
 typing_extensions==4.13.0
 uvicorn==0.34.0
