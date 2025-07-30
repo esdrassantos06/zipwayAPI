@@ -120,7 +120,7 @@ ALLOWED_ORIGINS=https://yourdomain.com,https://www.yourdomain.com
    python -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
    
    # Or run directly
-   python app/main.py
+   python -m app.main
    ```
 
 ### With Docker
