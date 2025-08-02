@@ -7,12 +7,13 @@ import logging
 logger = logging.getLogger(__name__)
 DATABASE_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'shortener.db')
 
+
 def create_table():
     conn = None
     try:
         conn = sqlite3.connect(DATABASE_PATH)
         cursor = conn.cursor()
-        
+
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS urls (
             id TEXT PRIMARY KEY,
@@ -21,32 +22,34 @@ def create_table():
             clicks INTEGER DEFAULT 0
         )
         ''')
-        
+
         conn.commit()
         logger.info("Tables Created Successfully!")
-    except Error as e: 
+    except Error as e:
         logger.error(f"Error trying to create tables: {e}")
-    finally: 
+    finally:
         if conn:
             conn.close()
-            
+
+
 @contextmanager
 def get_db_connection():
     """
     Context manager for connection with DB
     """
     conn = None
-    try: 
+    try:
         conn = sqlite3.connect(DATABASE_PATH)
         conn.row_factory = sqlite3.Row
         yield conn
-    except Error as e: 
+    except Error as e:
         logger.error(f"Error on connection to database: {e}")
         raise
     finally:
         if conn:
             conn.close()
-            
+
+
 def insert_url(short_id, target_url):
     """
     Insert a new url to DB
@@ -58,13 +61,13 @@ def insert_url(short_id, target_url):
         Returns:
         bool: True if successful, False otherwise
     """
-    try: 
+    try:
         with get_db_connection() as conn:
             cursor = conn.cursor()
             cursor.execute(
                 "INSERT INTO urls (id, target_url) VALUES (?, ?)",
                 (short_id, target_url)
-                )
+            )
             conn.commit()
             return True
     except Error as e:
@@ -82,21 +85,22 @@ def get_url_by_id(short_id):
     Returns:
         dict: URL data or None otherwise
     """
-    
-    try: 
+
+    try:
         with get_db_connection() as conn:
             cursor = conn.cursor()
             cursor.execute(
                 "SELECT id, target_url FROM urls WHERE id = ?",
                 (short_id,)
-                )
+            )
             result = cursor.fetchone()
             return dict(result) if result else None
-        
+
     except Error as e:
         logger.error(f"Error searching url: {e}")
         return None
-    
+
+
 def increment_clicks(short_id):
     """
     Increments the click counter for a URL
@@ -114,7 +118,8 @@ def increment_clicks(short_id):
             conn.commit()
     except Error as e:
         logger.error(f"Error updating click counter, {e}")
-        
+
+
 def check_id_exists(short_id):
     """
     Verify if id exists in DB
@@ -125,7 +130,7 @@ def check_id_exists(short_id):
     Returns:
         bool: True if ID exists, False otherwise
     """
-    try: 
+    try:
         with get_db_connection() as conn:
             cursor = conn.cursor()
             cursor.execute(
@@ -136,7 +141,8 @@ def check_id_exists(short_id):
     except Error as e:
         logger.error(f"Error trying to check ID: {e}")
         return False
-    
+
+
 def get_url_stats(limit=10):
     """
     Retrieves statistics of the most accessed URLs
@@ -164,6 +170,7 @@ def get_url_stats(limit=10):
     except Error as e:
         logger.error(f"Error trying to search statistics, {e}")
         return []
+
 
 def delete_url(short_id: str) -> bool:
     """
