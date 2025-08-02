@@ -60,8 +60,7 @@ ENV=development # Options: development, staging, production
 ADMIN_API_TOKEN=your_secure_admin_token_here
 
 # URLs
-BASE_URL=http://localhost:3000        # Frontend URL for short link generation
-BACKEND_URL=http://localhost:8000     # Backend URL for API calls
+BASE_URL=http://localhost:3000        # Base URL for short link generation
 
 # CORS Configuration
 ALLOWED_ORIGINS=https://yourdomain.com,https://www.yourdomain.com
@@ -74,7 +73,6 @@ ALLOWED_ORIGINS=https://yourdomain.com,https://www.yourdomain.com
 - **ENV**: Environment mode affecting CORS and logging
 - **ADMIN_API_TOKEN**: Secure token for admin endpoints (generate a strong random string)
 - **BASE_URL**: Frontend URL used to construct complete short URLs
-- **BACKEND_URL**: Backend API URL for internal references
 - **ALLOWED_ORIGINS**: Comma-separated list of allowed CORS origins
 
 ## 🚀 Running Locally
