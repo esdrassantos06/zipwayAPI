@@ -27,7 +27,7 @@ from .database import (
     get_url_stats,
     delete_url
 )
-from .auth import validate_admin_token
+from .auth import AdminToken
 from .limiter import limiter, DEFAULT_LIMITS
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
@@ -67,6 +67,8 @@ app.add_middleware(
     allow_headers=["*"],
     allow_credentials=True
 )
+
+admin_auth = AdminToken()
 
 
 @app.get("/", tags=["Information"])
@@ -228,7 +230,7 @@ async def create_short_url(url: URLBase, request: Request):
 
 @app.get("/stats", tags=["Statistics"])
 @limiter.limit(DEFAULT_LIMITS["admin"])
-async def get_statistics(request: Request, limit: int = 20, token: str = Depends(validate_admin_token)):
+async def get_statistics(request: Request, limit: int = 20, token: str = Depends(admin_auth)):
     """
     Returns usage statistics for the most popular shortened URLs.
     """
@@ -257,7 +259,7 @@ async def redirect_to_target(short_id: str, request: Request):
 
 @app.delete("/delete_url", tags=["URLs"])
 @limiter.limit(DEFAULT_LIMITS["admin"])
-async def delete_short_url(short_id: str, request: Request, token: str = Depends(validate_admin_token)):
+async def delete_short_url(short_id: str, request: Request, token: str = Depends(admin_auth)):
     """
     Deletes a shortened URL, only accessible with an admin token.
     """
