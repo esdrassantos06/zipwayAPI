@@ -6,7 +6,7 @@ class URLBase(BaseModel):
     custom_id: Optional[str] = Field(None, alias="short_id")
     
     class Config:
-        allow_population_by_field_name = True
+        validate_by_name = True
 
 class URLInfo(BaseModel):
     id: str
