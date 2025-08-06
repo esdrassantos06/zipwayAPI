@@ -1,11 +1,13 @@
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 import os
+from dotenv import load_dotenv
 
 security = HTTPBearer()
 
 class AdminToken:
     def __init__(self):
+        load_dotenv()
         self.__token = os.getenv("ADMIN_API_TOKEN")
         if not self.__token:
             raise RuntimeError("Admin token not configured")
