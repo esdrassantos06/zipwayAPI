@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 
 from ..models.url import URL
 
+
 class UrlRepository:
     def __init__(self, db: Session):
         self.db = db
@@ -24,7 +25,7 @@ class UrlRepository:
     def exists(self, short_id: str) -> bool:
         return self.db.query(URL.id).filter(URL.id == short_id).first() is not None
 
-    def stats(self, limit: int=20):
+    def stats(self, limit: int = 20):
         return self.db.query(URL).order_by(URL.clicks.desc()).limit(limit).all()
 
     def delete(self, short_id: str) -> bool:
@@ -34,10 +35,9 @@ class UrlRepository:
             self.db.commit()
             return True
         return False
-    
+
     def return_target_url(self, short_id: str) -> str | None:
         short_url = self.get(short_id)
         if short_url:
             return short_url.target_url
         return None
-

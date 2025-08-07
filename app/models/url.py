@@ -1,5 +1,26 @@
 from sqlalchemy import Column, String, Integer, DateTime, func
 from app.database import Base
+from pydantic import BaseModel, Field
+from typing import Optional
+
+# Pydantic
+
+class URLBase(BaseModel):
+    target_url: str
+    custom_id: Optional[str] = Field(None, alias="short_id")
+
+    class Config:
+        validate_by_name = True
+
+
+class URLInfo(BaseModel):
+    id: str
+    target_url: str
+    short_url: str
+
+
+
+# SQLAlchemy
 
 class URL(Base):
     __tablename__ = "urls"

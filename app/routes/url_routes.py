@@ -3,7 +3,7 @@ from fastapi.responses import RedirectResponse
 
 from ..controllers.url_controller import get_url_controller, UrlController
 from ..dependencies.limiter import limiter, DEFAULT_LIMITS
-from ..models._init_ import URLBase
+from ..models.url import URLBase
 from ..views.url_views import UrlCreateView
 
 url_router = APIRouter(prefix="/url", tags=["URLs"])

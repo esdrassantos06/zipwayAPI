@@ -7,9 +7,9 @@ from contextlib import asynccontextmanager
 from app.dependencies.limiter import limiter
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
-from .routes.admin_routes import admin_router
-from .routes.url_routes import url_router
-from .database import init_db
+from app.routes.admin_routes import admin_router
+from app.routes.url_routes import url_router
+from app.database import init_db
 
 load_dotenv()
 
@@ -62,11 +62,13 @@ async def root():
     """
     return {
         "app": "URL Shortener",
-        "version": "1.0.0",
+        "version": "2.0.0",
         "endpoints": {
             "POST /shorten": "Create a Short URL",
             "GET /{short_id}": "Redirect to the original URL",
-            "GET /stats": "Get use stats"
+            "GET admin/stats": "Get use stats",
+            "GET /docs": "Redirect to the docs",
+            "GET /admin/delete-url": "Delete the URL"
         }
     }
 
@@ -82,5 +84,4 @@ async def ping():
 
 if __name__ == "__main__":
     import uvicorn
-
     uvicorn.run("app.main:app", host=HOST, port=PORT, reload=True)

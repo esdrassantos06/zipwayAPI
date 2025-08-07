@@ -24,7 +24,7 @@ async def get_statistics(
     return controller.get_statistics(limit)
 
 
-@admin_router.delete("/delete_url", response_model=DeleteUrlResponse)
+@admin_router.delete("/delete-url", response_model=DeleteUrlResponse)
 @limiter.limit(DEFAULT_LIMITS["admin"])
 async def delete_short_url(
     request: Request,

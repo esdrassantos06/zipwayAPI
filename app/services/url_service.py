@@ -1,6 +1,5 @@
 from app.repositories.url_repository import UrlRepository
-from ..models.url import URL
-from ..models._init_ import URLBase
+from ..models.url import URL, URLBase
 from typing import List
 import shortuuid
 from ..dependencies.validators import URLValidator

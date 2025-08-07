@@ -1,5 +1,5 @@
 from ..services.url_service import UrlService
-from ..models._init_ import URLBase, URLInfo
+from ..models.url import URLBase, URLInfo
 from fastapi import Depends, HTTPException
 from sqlalchemy.orm import Session
 from ..repositories.url_repository import UrlRepository
